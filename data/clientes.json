@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "nombre": "Laura Torres",
+    "telefono": "11223344",
+    "direccion": "Av. Rivadavia 900",
+    "email": "laura.torres@mail.com",
+    "deuda": 0
+  },
+  {
+    "id": "2",
+    "nombre": "Carlos Gómez",
+    "telefono": "33445566",
+    "direccion": "Calle Mitre 500",
+    "email": "carlos.gomez@mail.com",
+    "deuda": 500
+  },
+  {
+    "id": "3",
+    "nombre": "Marta Díaz",
+    "telefono": "22334455",
+    "direccion": "Av. San Martín 1200",
+    "email": "marta.diaz@mail.com",
+    "deuda": 0
+  }
+]
