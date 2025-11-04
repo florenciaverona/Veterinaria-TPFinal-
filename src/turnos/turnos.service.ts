@@ -49,5 +49,19 @@ create(t: Turno): Turno {
     this.turnos.splice(index, 1);
     return { mensaje: 'Turno eliminado' };
   }
+  getChequeosAnuales(): Turno[] {
+  // Filtra los turnos cuyo motivo sea "chequeo anual"
+  const chequeos = this.turnos.filter(
+    (turno) => turno.motivo.toLowerCase() == 'chequeo anual'
+  );
+
+  // Si no hay resultados, lanza una excepción
+  if (chequeos.length === 0) {
+    throw new NotFoundException('No hay turnos de chequeo anual registrados');
+  }
+
+  return chequeos;
+}
+
 }
 //hacen referencia al id de mascota

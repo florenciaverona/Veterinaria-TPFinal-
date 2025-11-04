@@ -10,7 +10,10 @@ export class TurnosController {
   getAll() {
     return this.service.getAll();
   }
-
+  @Get('chequeo-anual')
+  getChequeosAnuales() {
+    return this.service.getChequeosAnuales();
+  }
   @Get(':id')
   getById(@Param('id') id: string) {
     return this.service.getById(id);
