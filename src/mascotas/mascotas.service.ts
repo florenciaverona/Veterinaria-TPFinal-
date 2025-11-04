@@ -44,5 +44,12 @@ export class MascotasService {
     this.mascotas.splice(index, 1);
     return { mensaje: 'Mascota eliminada' };
   }
+  getHistorial(id: string): string[] {
+    const mascota = this.mascotas.find(m => m.id === id);
+    if (!mascota) {
+      throw new NotFoundException(`Mascota con id ${id} no encontrada`);
+    }
+    return mascota.historial;
+  }
 }
 
