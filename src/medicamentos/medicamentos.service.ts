@@ -1,11 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
 import { Medicamento } from './medicamentosModel';
 
 @Injectable()
 export class MedicamentosService {
-    private medicamentos: Medicamento[] = [];
+
+  private medicamentos: Medicamento[] = [  {
+    id: "med1",
+    nombre: "Baytril",
+    dosis: "5mg",
+    stock: 20,
+    fechaVencimiento: new Date("2026-01-01")
+  },
+  {
+    id: "med2",
+    nombre: "Ivermectina",
+    dosis: "10mg",
+    stock: 35,
+    fechaVencimiento: new Date("2026-05-10")
+  }];  
 
   getAll(): Medicamento[] {
     return this.medicamentos;
@@ -17,21 +29,23 @@ export class MedicamentosService {
     return med;
   }
 
-  create(medicamentos : Medicamento) : Medicamento {
-    let newmedicamento = {
-        "id": medicamentos.id,
-        "nombre": medicamentos.nombre,
-        "dosis": medicamentos.dosis,
-        "stock": medicamentos.stock,
-        "fechaVencimiento": medicamentos.fechaVencimiento
-    }
-    this.medicamentos.push(newmedicamento);
-    return newmedicamento
+  create(medicamento: Medicamento): Medicamento {
+    const newMedicamento: Medicamento = {
+      id: medicamento.id,
+      nombre: medicamento.nombre,
+      dosis: medicamento.dosis,
+      stock: medicamento.stock,
+      fechaVencimiento: medicamento.fechaVencimiento
+    };
+
+    this.medicamentos.push(newMedicamento);
+    return newMedicamento;
   }
 
   update(id: string, data: Partial<Medicamento>) {
     const index = this.medicamentos.findIndex(m => m.id == id);
-    if (index == -1) throw new NotFoundException('Medicamento no encontrado');
+    if (index === -1) throw new NotFoundException('Medicamento no encontrado');
+
     this.medicamentos[index] = { ...this.medicamentos[index], ...data };
     return this.medicamentos[index];
   }
@@ -39,6 +53,7 @@ export class MedicamentosService {
   delete(id: string) {
     const index = this.medicamentos.findIndex(m => m.id == id);
     if (index == -1) throw new NotFoundException('Medicamento no encontrado');
+
     this.medicamentos.splice(index, 1);
     return { mensaje: 'Medicamento eliminado' };
   }

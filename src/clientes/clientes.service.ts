@@ -1,11 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
 import { Cliente } from './clientesModel';
 
 @Injectable()
 export class ClientesService {
-    private clientes: Cliente[] = [];
+    private clientes: Cliente[] = [ {
+    id: "c1",
+    nombre: "Juan Pérez",
+    telefono: "1122334455",
+    direccion: "Calle Falsa 123",
+    email: "juan@mail.com",
+    deuda: 0
+  },
+  {
+    id: "c2",
+    nombre: "María López",
+    telefono: "221334455",
+    direccion: "Av. Siempre Viva 742",
+    email: "maria@mail.com",
+    deuda: 2000
+  }];
 
   getAll(): Cliente[] {
     return this.clientes;

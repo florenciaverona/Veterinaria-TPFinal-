@@ -10,7 +10,10 @@ export class TratamientosController {
   getAll() {
     return this.service.getAll();
   }
-
+  @Get('mascota/:mascotaId')
+  getByMascota(@Param('mascotaId') mascotaId: string) {
+    return this.service.getByMascota(mascotaId);
+  }
   @Get(':id')
   getById(@Param('id') id: string) {
     return this.service.getById(id);

@@ -3,5 +3,5 @@ export class Tratamiento {
   mascotaId: string;
   descripcion: string;
   fecha: Date;
-  veterinario: string;
+  medicamento: string[];
 }

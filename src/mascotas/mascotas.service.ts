@@ -1,10 +1,52 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Mascota } from './mascotasModel';
-import { Cliente } from 'src/clientes/clientesModel';
+import { TratamientosService } from 'src/tratamientos/tratamientos.service';
+import { TurnosService } from 'src/turnos/turnos.service';
 
 @Injectable()
 export class MascotasService {
-    private mascotas: Mascota[] = [];
+    private mascotas: Mascota[] = [  {
+    id: "m1",
+    nombre: "Julia",
+    especie: "perro",
+    raza: "Labrador",
+    edad: 3,
+    duenoId: "c1",
+    historial: []
+  },
+  {
+    id: "m2",
+    nombre: "Tomy",
+    especie: "gato",
+    raza: "Siames",
+    edad: 2,
+    duenoId: "c2",
+    historial: []
+  },
+  {
+    id: "m3",
+    nombre: "Tomy",
+    especie: "gato",
+    raza: "Siames",
+    edad: 2,
+    duenoId: "c2",
+    historial: []
+  },
+ {
+    id: "m4",
+    nombre: "Toto",
+    especie: "carpincho",
+    raza: "agua dulce",
+    edad: 2,
+    duenoId: "c2",
+    historial: []
+  }];
+  constructor(
+  @Inject(forwardRef(() => TurnosService))
+  private readonly turnosService: TurnosService,
+
+  private readonly tratamientosService: TratamientosService
+) {}
 
 
   getAll(): Mascota[] {
@@ -44,12 +86,13 @@ export class MascotasService {
     this.mascotas.splice(index, 1);
     return { mensaje: 'Mascota eliminada' };
   }
-  getHistorial(id: string): string[] {
-    const mascota = this.mascotas.find(m => m.id === id);
-    if (!mascota) {
-      throw new NotFoundException(`Mascota con id ${id} no encontrada`);
-    }
-    return mascota.historial;
-  }
+getHistorial(mascotaId: string) {
+  const turnos = this.turnosService.getByMascota(mascotaId);
+  const tratamientos = this.tratamientosService.getByMascota(mascotaId);
+
+  return { mascotaId, turnos, tratamientos };
+}
+
+
 }
 

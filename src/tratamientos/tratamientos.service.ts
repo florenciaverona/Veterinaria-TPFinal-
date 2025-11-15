@@ -1,15 +1,38 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
 import { Tratamiento } from './tratamientosModel';
+import { MedicamentosService } from 'src/medicamentos/medicamentos.service';
 
 @Injectable()
 export class TratamientosService {
-    private tratamientos: Tratamiento[] = [];
+    private tratamientos: Tratamiento[] = [{
+    id: "t1",
+    mascotaId: "m1",
+    descripcion: "Infección en la piel",
+    fecha: new Date("2025-01-05"),
+    medicamento: ["med1"]
+  },
+  {
+    id: "t2",
+    mascotaId: "m1",
+    descripcion: "Desparasitación",
+    fecha: new Date("2025-03-01"),
+    medicamento: ["med2"]
+  },
+  {
+    id: "t3",
+    mascotaId: "m2",
+    descripcion: "Control general",
+    fecha: new Date("2025-02-10"),
+    medicamento: []
+  }];
+    constructor(private readonly medicamentosService: MedicamentosService) {}
   
 
   getAll(): Tratamiento[] {
     return this.tratamientos;
+  }
+  getByMascota(mascotaId: string): Tratamiento[] {
+  return this.tratamientos.filter(t => t.mascotaId == mascotaId);
   }
 
   getById(id: string): Tratamiento {
@@ -24,7 +47,7 @@ export class TratamientosService {
       "mascotaId": t.mascotaId,
       "descripcion": t.descripcion,
       "fecha": t.fecha,
-      "veterinario": t.veterinario
+      "medicamento": t.medicamento ?? [] 
     }
     this.tratamientos.push(newtratamiento);
     return newtratamiento;
@@ -43,6 +66,25 @@ export class TratamientosService {
     this.tratamientos.splice(index, 1);
     return { mensaje: 'Tratamiento eliminado' };
   }
+  agregarMedicamento(tratamientoId: string, medicamentoId: string): Tratamiento {
+  const tratamiento = this.tratamientos.find(t => t.id === tratamientoId);
+
+  if (!tratamiento)
+    throw new NotFoundException('Tratamiento no encontrado');
+
+  if (!this.medicamentosService.getById(medicamentoId))
+    throw new NotFoundException('Medicamento no encontrado');
+
+  // Si no tiene array inicializado
+  if (!tratamiento.medicamento) {
+    tratamiento.medicamento = [];
+  }
+
+  tratamiento.medicamento.push(medicamentoId);
+
+  return tratamiento;
+}
+
 }
 
 

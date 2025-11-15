@@ -11,9 +11,14 @@ export class TurnosController {
     return this.service.getAll();
   }
   @Get('chequeo-anual')
-  getChequeosAnuales() {
-    return this.service.getChequeosAnuales();
+  getMascotasQueNecesitanChequeoAnual() {
+    return this.service.getMascotasQueNecesitanChequeoAnual();
   }
+  @Get('mascota/:mascotaId')
+  getByMascota(@Param('mascotaId') mascotaId: string) {
+    return this.service.getByMascota(mascotaId);
+  }
+
   @Get(':id')
   getById(@Param('id') id: string) {
     return this.service.getById(id);

@@ -11,16 +11,15 @@ export class MascotasController {
     return this.service.getAll();
   }
 
-  @Get('historial/:id')
-  getHistorial(@Param('id') id: string) {
-    return this.service.getHistorial(id);
-  }
-  
   @Get(':id')
   getById(@Param('id') id: string) {
     return this.service.getById(id);
   }
 
+  @Get(':id/historial')
+getHistorial(@Param('id') id: string) {
+  return this.service.getHistorial(id);
+}
   @Post('registrar')
   create(@Body() mascota: Mascota) {
     return this.service.create(mascota);
